@@ -63,7 +63,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/Workiva/go-datastructures/common"
+	"go-structures-algorithm/src/structures/common"
 )
 
 const p = .5 // the p level defines the probability that a node

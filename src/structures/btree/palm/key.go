@@ -14,21 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package skip
+package palm
 
 import "go-structures-algorithm/src/structures/common"
 
-// Iterator defines an interface that allows a consumer to iterate
-// all results of a query.  All values will be visited in-order.
-type Iterator interface {
-	// Next returns a bool indicating if there is future value
-	// in the iterator and moves the iterator to that value.
-	Next() bool
-	// Value returns a Comparator representing the iterator's current
-	// position.  If there is no value, this returns nil.
-	Value() common.Comparator
-	// exhaust is a helper method that will iterate this iterator
-	// to completion and return a list of resulting Entries
-	// in order.
-	exhaust() common.Comparators
+func reverseKeys(cmps common.Comparators) common.Comparators {
+	reversed := make(common.Comparators, len(cmps))
+	for i := len(cmps) - 1; i >= 0; i-- {
+		reversed[len(cmps)-1-i] = cmps[i]
+	}
+
+	return reversed
+}
+
+func chunkKeys(keys common.Comparators, numParts int64) []common.Comparators {
+	parts := make([]common.Comparators, numParts)
+	for i := int64(0); i < numParts; i++ {
+		parts[i] = keys[i*int64(len(keys))/numParts : (i+1)*int64(len(keys))/numParts]
+	}
+	return parts
 }
